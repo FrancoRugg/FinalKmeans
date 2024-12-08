@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+
+  <body>
+    <section>
+      <article class="iris_config">
+        <h1>Configurar entrenamiento con dataset Iris</h1>
+        <form action="/home" method="post">
+          <label for="csv_file">Tomar los datos del archivo: </label><br />
+          <input type="file" name="csv_file" id="csv_file" />
+
+          <br /><br />
+          <label for="test_size">Porcentaje de validación:</label><br />
+          <select name="test_size" id="test_size">
+            <option value="1.0" selected disabled>
+              Seleccione el porcentaje a utilizar
+            </option>
+            <option value="0.2">80% validación, 20% entrenamiento</option>
+            <option value="0.5">50% validación, 50% entrenamiento</option>
+            <option value="0.6">40% validación, 60% entrenamiento</option>
+          </select>
+          <input type="hidden" name="test_size_text" id="test_size_text" />
+
+          <br /><br />
+
+          <button id="train_model" type="submit">Entrenar modelo</button>
+        </form>
+      </article>
+      <article class="iris_data">
+        <h1>Resultados del KMeans</h1>
+        <pre id="train_info">{{ info }}</pre>
+      </article>
+    </section>
+  </body>
+  <script src="static/js/home.js"></script>
+</html>
