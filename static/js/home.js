@@ -35,5 +35,4 @@ if (train_info) {
         iris_data.classList.add("on")
         iris_data.classList.remove("off")
     }
-
 }
