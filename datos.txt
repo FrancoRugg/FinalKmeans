@@ -49,3 +49,12 @@ Promedio de 'two_train': 2.5678571428571426
 Promedio de 'cero_test': 3.0100000000000002 
 Promedio de 'one_test': 3.0773437500000003 
 Promedio de 'two_test': 2.9651315789473682
+
+Teoria, clase 1 y datos de Python avanzado.
+
+pip install Flask
+pip install numpy
+pip install pandas
+pip install scikit-learn
+pip install matplotlib
+python -m venv venv

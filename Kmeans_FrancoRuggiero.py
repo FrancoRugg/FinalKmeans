@@ -8,7 +8,16 @@ from sklearn.metrics import accuracy_score;
 
 
 def data(test_size,csv_file="iris_data.csv"):
-    
+    """
+    Deben traer el ejercicio de entrenamiento que hicieron en la cursada de machine learning y
+    agregarle una interfaz grafica (web o desktop) que permita subir los datos del dataset al 
+    programa como un archivo csv e informe el validation score y permita elegir el % de datos 
+    de validacion y entrenamiento (50 y 50, 80 y 20, 40 y 60). 
+
+    Args:
+        test_size (_type_): _description_
+        csv_file (str, optional): _description_. Defaults to "iris_data.csv".
+    """
     data = pd.read_csv(csv_file)
     
     # Asigna características y etiquetas, depende del archivo CSV que cargue.
@@ -93,6 +102,7 @@ def data(test_size,csv_file="iris_data.csv"):
     avg_two_train = np.mean(twoTrain,axis=0);
 
     # Mostrar los promedios
+    info +="----------------------------------------------------------- \n";
     info+=f"Promedio de 'cero_train': {avg_cero_train} \n";
     # print(f"Promedio de 'cero_train': {avg_cero_train}")
     info+=f"Promedio de 'one_train': {avg_one_train} \n";
@@ -114,6 +124,7 @@ def data(test_size,csv_file="iris_data.csv"):
     # print(f"Promedio de 'one_test': {avg_one_test}")
     info+=f"Promedio de 'two_test': {avg_two_test} \n";
     # print(f"Promedio de 'two_test': {avg_two_test}")
+    # info +="----------------------------------------------------------- \n";
 
 
 # print(X);
