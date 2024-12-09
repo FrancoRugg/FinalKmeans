@@ -17,6 +17,11 @@ def data(test_size,csv_file="iris_data.csv"):
     Args:
         test_size (_type_): _description_
         csv_file (str, optional): _description_. Defaults to "iris_data.csv".
+        
+    - Su objetivo principal es permitir la carga del dataset de Iris en un archivo de excel,
+    - Realizar un entranamiento con el modelo de Kmeans,
+    - Evaluar su rendimiento en base a las estadísticas obtenidas y mostrár su precisión y los promedios de cada grupo.
+    - El mismo se encuentra integrado con una interfaz gráfica en la cual se pueden  ajustar los datos de entrenamiento y validaciónes a utilizar en las pruebas.
     """
     data = pd.read_csv(csv_file)
     
