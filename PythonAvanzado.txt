@@ -1,0 +1,1129 @@
+Temas a ver:
+
+-Introducción a Flask(Parte Web) Versión más productiva: Django.
+-Ciencia de datos(Machine Learning - Scikit Learn) Versión más productiva: Tensor Flow.
+-Interfaz gráfica QT(Diseño).
+
+
+Clase 1: ------------------------------------------------------------------------------------
+
+Jupyter: para anotaciones en python.
+
+pip install jupyter
+
+jupyter notebook, así se activa por consola.
+
+** Letra en negrita **;
+
+desordenada = [2,3,5,-1,5,-12,0,7];
+ordenada = desordenada.copy();
+ordenada.sort(); #Te lo ordena de menor a mayor(Numerico o alphabetico).
+reves = ordenada.copy();
+reves.sort(reverse=True);#Te lo ordena de mayor a menor(Numerico o alphabetico).
+
+print(desordenada)
+print(ordenada);
+print(reves);
+
+def even_criteria(x):
+	if x%2 == 0:
+		return 0;
+	else:
+		return 1;
+
+
+----------sort(key=even_criteria);#Ordena la lista primero por pares y luego por impares;
+----------sorted();#NO pertenece a ninguna clase, puede usarse en distintos iteradores;
+EJ:
+des = ('arroz','zapallo','sol');
+ord = sorted(des,key=lambda x:len(x));#Se le pasa el archivo, la key y el reverse de ser necesario;
+print(ord);
+----------lambda()#Funcion temporal, sin nombre, define una funcipon en unsa sola linea;
+EJ:
+f=(lambda x:x+1);#Suma uno
+----------filter();#Función de seleccion por criterio indicado,devuelve un objeto de la clase filter(Hay que castearlo a lista o tulpa,etc.);
+EJ:
+lista = ['ala', 'costa', 'anuncio', 'cada', 'abeja']
+filtrado = filter(lambda x: x.startswith('a'), lista)
+print(list(filtrado))
+----------zip(a,b);#Arma un iterable en base a las posiciones de ambas listas;
+EJ:
+a=[1,2,3,4]
+b=['hola','como','estas','bien']
+print(dict(zip(a,b)))
+
+f=lambda x:x**2#Lo multiplica al cuadrado
+x=(1,2,3,4)
+y=(f(1),f(2),f(3),f(4));
+
+for a,b in zip(x,y):
+	print('El valor para',a,'es',b);
+
+El valor para 1 es 1
+El valor para 2 es 4
+El valor para 3 es 9
+El valor para 4 es 16
+----------map();#Devuelve un objeto de la clase map, para mostrar ambos datos;
+EJ:
+a=(1,2,3,4);
+b=map(lambda x:x**2,a)
+print(tuple(b))
+
+a=[[1,2],[3,4],[5,6],[7,9]]
+
+def agregar_elem(lista):
+    lista.append(8);
+    return lista;
+b=map(agregar_elem,a)
+print(tuple(b));
+---------------------Ordenar Fechas------------------------
+from datetime import datetime
+
+def order_dates(x):
+    return datetime.strptime(x, '%d-%m-%y')
+
+a = '05-10-22'
+b = '12-12-22'
+c = '24-08-22'
+
+lista = [c, b, a]
+
+# Usar la función order_dates como clave en el sort
+lista.sort(key=order_dates)
+
+print(lista)
+
+DocsStrings Para comentar en python de que se trata la función;
+""" Cosas a comenter en multilinea """;
+print(nombre_funcion.__doc__);Para ver lo que hay en la multilinea
+         ó
+help(nombre_funcion);Para ver lo que hay en la multilinea
+
+
+Clase 2: ------------------------------------------------------------------------------------
+
+pip freeze #Sirve para activar el archivo de requerimientos
+
+requeriments.txt 
+
+pip freeze > requeriments.txt
+
+pip install -r .\requetiments.txt #Te instala todos los paquetes en el venv accionado.
+
+         O usar PIP FILE, es más seguro.
+
+
+
+Flush=True #Prioridad en la ejecución
+
+def nombre_funcion(x:int)->int: #Especifica que tiene que devolver(__annotations__);
+
+print(nombre_funcion.__annotations__);
+
+
+--------------DECORADORES
+
+
+def decorador(f): #Recibe de parámetro una función
+    def new_f(*args,**kwargs):
+        print('Ejecutando"{}"...'.format(f.__name__));
+
+        rv = f(*args,**kwargs)
+        print('Terminado');
+        return rv;
+    return new_f; #Devuelve una función
+
+def print_name(f):
+	def new_f(*args,**kwargs):
+		print(f.__name__);
+		return f(*args,**kwargs);
+	return new_f;
+
+def print_args_kwargs(f):
+	def new_f(*args,**kwargs):
+		print(*args,**kwargs);
+		return f(*args,**kwargs);
+	return new_f;
+
+
+@print_args_kwargs
+@print_name
+@decorador
+def suma(a,b):
+	return a+b
+
+print(suma(1,2));
+
+@print_args_kwargs
+@print_name
+@decorador
+def mayusc(x)->str:
+	return x.upper()
+
+print(mayusc('hola'));
+
+
+def decorator_func(x_str):
+	def Inner(f):
+		def print_name(*args,**kwargs):
+		    print(f.__name__);
+		    return f(*args,**kwargs);
+		def print_args(*args,**kwargs):
+		    print(*args,**kwargs);
+		    return f(*args,**kwargs);
+		rv={
+			'args':print_args,
+			'name':print_name
+			}
+		return rv[x]
+	return Inner;
+@decorator_func('name')#Imprime Nombre
+def suma(a,b):
+	return a+b
+
+print(suma(1,2));
+
+@decorator_func('args')#Imprime args
+def suma(a,b):
+	return a+b
+
+print(suma(1,2));
+
+name='Franco';
+surname='Ruggiero';
+print(f'name  | surname')
+print('-'*10,'|','-'*10)
+
+
+
+--------Assert #Palabra reservada que lanza una excepción en el caso de la expresión que tiene a continuación es falsa (AsseprionError).
+x=5
+assert x==5,"El valor no es 5";
+
+try:
+    assert x==5,f'El valor no es 5, es "{x}"';
+except AssertionError as e:
+    print(e.args[0])
+
+
+Clase 3: ------------------------------------------------------------------------------------
+
+
+
+-----DefaultDict Tipo de dato agregado al lenguaje como decimal.
+
+from collections import defaultdict as dd;
+from time import time_ns as ns;
+
+# Hay que pasarle como parametro una función que tiene que devolver un valor.
+
+x = dd(lambda:"No se encuentra esa key");
+x = dd(lambda:ns()); # Se puede poner que ejecute una función.
+
+x['hola']="0";
+x['como']="1";
+x['andas']="2";
+
+print(x.keys()); #Imprime claves.
+print(x.values()); #Imprime Valores.
+
+print(x['hola']);
+print(x['como']);
+print(x['andas']);
+print(x['adios']);#De ser un dic normal tira error
+
+print(x.keys());
+print(x.values());
+
+RESPUESTAS:
+
+dict_keys(['hola', 'como', 'andas'])
+dict_values(['0', '1', '2'])
+0
+1
+2
+No se encuentra esa key
+
+------ Luego lo agrega con el valor puesto en la función lambda
+
+dict_keys(['hola', 'como', 'andas', 'adios'])
+dict_values(['0', '1', '2', 'No se encuentra esa key'])
+
+OTRO EJEMPLO_____________:
+
+from collections import defaultdict as dd;
+from time import time_ns as ns,sleep;#Sleep duerme la cantidad de milisegundos, no hace nada en el esapacio que vos les pases
+
+# Hay que pasarle como parametro una función que tiene que devolver un valor.
+def nanoSeg():
+    sleep(1);
+    return ns();
+    
+x = dd(lambda:nanoSeg());
+
+x['aaa']=1;
+x['bbb']=2;
+x['ccc']=3;
+
+claves = ('aaa','ccc','zzz','lll','bbb','jjj');
+
+
+x.default_factory=lambda:ns(); #Para cambiar la función en el recorrido del código.
+x.__missing__();#Cuando una key no existe, missing le pasa el parámetro que falta para que se guarde con el default_factory
+
+
+for c in claves:
+    print(f'{c} ----> {x[c]}')
+
+#print(x.keys(),x.values())
+
+
+
+
+--------------DocTest: Función que te permite hacer pruebas unitarias.
+
+def pointSum(one, other):
+    """
+    retorna la suma de 2 tuplas de 3 elementos que contienen las coordenadas de puntos en el espacio
+
+    >>> pointSum((1,2,3),(4,5,6))
+    (5, 7, 9)
+    >>> pointSum((1,2,-3),(4,-5,6))
+    (5, -3, 3)
+    >>> pointSum((1,1,1),(0,0,0))
+    (2,2,2)
+    """
+    return( 
+        one[0]+other[0],
+        one[1]+other[1],
+        one[2]+other[2]
+    )
+
+if __name__ == '__main__':
+    import doctest;
+    #Para poder utilizarlo, hay que usar las docstrings
+    doctest.testmod(verbose=True)#Verbose = True indica que debe imprimir los resultados que sean satísfactorios.
+
+
+
+
+Clase 4: ------------------------------------------------------------------------------------
+
+
+Slots: Funciones ue se conectan a una señal.
+
+Los widgets se conectan mediante slots en QT.
+
+PyQ36 es la instalación que vamos a usar.
+
+Herramientas de diseño:
+-Designer de QT (Funciona con python <= 3.9)
+En este caso podés ejecutar la versión gráfica en en VENV(Entorno Virtual) y el que tengas predeterminado en el back.
+
+Se ejecuta con el comando:
+-Ruta del python 3.9.13: Se activa directamente con el venv.
+C:\Users\fruggiero\AppData\Local\Programs\Python\Python39\python -m venv venv
+.\venv\Scripts\activate
+
+Instalar:
+pip install pyqt6
+pip install pyqt6-tools
+
+Inicializar Designer:
+.\venv\Lib\site-packages\qt6_applications\Qt\bin\designer
+
+
+Los archivos que guarda el designer son con la terminación .ui
+La misma para generarla en un .py para que pueda ser util se utiliza pyuic6 -o nombreDelArchivo.py nombreDelArchivoADeserealizar.ui
+
+
+app = QApplication([Lista de parámetros]);
+
+window=MyDialog();
+window.show();
+window.exec()
+
+Ej:
+from PyQt6.QtWidgets import QApplication,QDialog;
+from FirstDialog import Ui_Dialog
+
+class MyDialog(QDialog,Ui_Dialog):
+    def __init__(self,parent=None):
+        super(MyDialog, self).__init__(parent);
+        self.setupUi(self);
+        
+app=QApplication([]);
+window=MyDialog();
+window.show();
+app.exec();
+
+
+Crear acciones con los botones:
+self.btn_ok.clicked.connect(self.ButtonPressed);
+
+
+Clase 6: ------------------------------------------------------------------------------------
+
+
+Diferencias entre ventanas con Qt:
+-QMainWindow (Debería de existir una sola, aunque las mismas no se bloquan entre si).
+-QDialog (Ventanas secundarias, formularios, etc. Los mismos se pueden acceder de cualquier lado y bloquea las demás ventanas).
+
+
+Usar Layout para hacerlo responsive.
+
+Clase 7: ------------------------------------------------------------------------------------
+
+Interfaces WEB
+
+Flask
+
+pip istall flask
+
+METHOD NOT ALLOWED:
+las @app.Route() Solo soportan métodos GET
+
+Clase 8: ------------------------------------------------------------------------------------
+
+Código dinámico con Flask:
+
+Muc y Jinja
+
+
+
+os.path.abspath("RutaAInstanciar")
+
+
+
+
+Crear archivo .db
+Db = os.path.abspath("RutaAInstanciar")
+Database = 'sqlite:/ ' +Db.replace('\\', '/')
+
+Sqlite es nativo de python, no hace falta hacerlo con MySQL
+
+
+Dentro del html se define el block:
+
+Dentro del mismo se le agrega
+
+<head>
+    {% block head %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    {% endblock %}
+</head>
+
+Y se llama así:
+
+{% {% extends "home.html" %} %}
+
+Ciclo for con datos:
+
+<ul>
+	{% for cuenta in cuentas %}
+	<li>{{ cuenta['curr'] }}</li>
+	{%  %}
+</ul>
+
+
+
+Clase 9: ------------------------------------------------------------------------------------
+
+
+DATA SCIENCE:
+
+Librerias de Python para Machine Learning
+-Numpy (Trabajo númerico, definir estructuras por monotipo, signados/nosignados)
+-Pandas (Su indexación es superior a Numpy, acceder a los valores mediante indices, mejor performance)
+
+La combinación de ambas se utiliza para adaptar/tener un set de datos bonitos tanto de entrada como de entrenamiento para poder ingresarlos al modelo.
+
+Modelo a utilizar:
+-Scikit learn
+-También existe, Tensor Flow que es mucho más robusta de aprender y requiere de un gran hardware.
+
+pip install numpy
+pip install pandas
+pip install scikit-learn
+
+Libro python data science handbook:
+
+https://github.com/jakevdp/PythonDataScienceHandbook?tab=readme-ov-file
+https://jakevdp.github.io/PythonDataScienceHandbook/
+
+
+import numpy as np
+
+x = np.array([1,2,3,4])
+>>> x
+array([1, 2, 3, 4])
+>>> x.dtype #Trae que tipo de dato es
+dtype('int64')
+>>> x = np.array([1,2,3,4.5]) 
+>>> x
+array([1. , 2. , 3. , 4.5])
+>>> x.dtype
+dtype('float64')
+>>> x = np.array([1,2,3,'4']) 
+>>> x
+array(['1', '2', '3', '4'], dtype='<U21')
+>>> x.dtype
+dtype('<U21')
+>>> x = np.array([1,2,3,4],[5,6,7,8])
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: Field elements must be 2- or 3-tuples, got '5'
+>>> x = np.array([[1,2,3,4],[5,6,7,8]])
+>>> x
+array([[1, 2, 3, 4],
+       [5, 6, 7, 8]])
+>>> x = np.array([1,2,3,4.14], dtype='int64') #Pone de que tipo de dato es el array
+>>> x
+array([1, 2, 3, 4])
+
+_____________________________Teoria___________________________________
+_ Toma algo estandar del sistema				      |
+int_ (Toma si la maquina es de 32bits o 64bits)			      |   
+								      |
+VER BIEN CUANTO NECESITA EL SISTEMA PARA QUE CORRA CORRECTAMENTE      |
+______________________________________________________________________|
+
+ARRAYS PREDISEÑADO:
+
+x = np.zeros(10)
+x.dtype
+dtype('float64')
+
+x = np.zeros(10, dtype='int8')
+x.dtype
+dtype('int8')
+
+#Inicializa la cantidad que quieras con ceros.
+x = np.empty(8, dtype='int8')
+x
+array([1, 0, 0, 0, 0, 0, 0, 0], dtype=int8)
+
+ES MEJOR USAR EMPTY PARA ASÏ LO GENERE VACIO Y LUEGO LO LLENEMOS
+
+#Inicializa la cantidad que quieras con unos.
+x = np.ones(10, dtype='int8')
+x
+array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1], dtype=int8)
+
+
+#Inicializa la cantidad que quieras con el valor que quieras
+x = np.full(10, 3.14) 
+x
+array([3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14])
+
+
+x = np.ones([1,1])
+x
+
+GENERAR MATRICES:
+#Inicializa la cantidad que quieras con ceros menos la diagonal
+x = np.eye(3)
+x
+array([[1., 0., 0.],
+       [0., 1., 0.],
+       [0., 0., 1.]])
+
+
+#Generar un array con un rango determinado que el mismo escale los números
+ x = np.arange(0,10)
+>>> x
+array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+
+#Genera números random dentro del array
+x = np.random.randint(0,10,100)
+>>> x
+array([1, 0, 1, 1, 2, 9, 2, 4, 5, 1, 4, 4, 0, 4, 0, 9, 9, 7, 0, 1, 9, 6,
+       4, 4, 6, 5, 7, 7, 9, 5, 9, 1, 4, 2, 8, 0, 8, 0, 5, 1, 7, 8, 2, 0,
+       4, 4, 2, 8, 7, 0, 8, 3, 2, 7, 4, 0, 5, 3, 6, 3, 5, 0, 8, 6, 2, 8,
+       1, 9, 0, 5, 8, 8, 4, 6, 7, 8, 7, 1, 4, 8, 2, 7, 6, 3, 4, 3, 6, 8,
+       2, 9, 2, 3, 0, 0, 8, 3, 9, 6, 4, 5], dtype=int32)
+
+
+CON NÜMEROS ALEATORIOS PODËS GENERAR UN SISTEMA QUE CUENTE CARTAS
+
+ASÏ MISMO UNO PARA QUE NUNCA SE DEN CUENTA CUAL ES EL SIGUIENTE NÜMERO QUE SE VA A GENERAR
+
+
+
+
+#Genera una división de número con espacios equidistantes en base a los elementos pedidos, en este caso 5
+x = np.linspace(0,10,5)
+x
+array([ 0. ,  2.5,  5. ,  7.5, 10. ])
+
+
+
+CARACTERISTICAS DE LOS ARRAY´S:
+-Tamaño
+x.size #Espacio del array.
+-Dimensiones
+x.ndim #Cantidad de elementos divisibles dentro de tu array.
+-Forma
+x.shape #Forma del array
+x.reshape(10,1) # Canbia la forma del array, en este caso 10 filas a 1 columna
+
+x = np.eye(5)
+ x
+array([[1., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0.],
+       [0., 0., 1., 0., 0.],
+       [0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 1.]])
+>>> x.ndim
+2
+>>> x.size
+25
+
+
+
+k = np.ones(10)
+k
+k.shape
+(10,)
+
+ k.reshape(10,1) 
+array([[1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.]])
+
+
+CASO DE PRUEBA:
+
+k = np.ones(10) 
+>>> k
+array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
+>>> kr = k.reshape(10,1) 
+>>> kr
+array([[1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.]])
+>>> kr.ndim
+2
+
+CAMBIA LA DIMENSIÖN POR TENER 2 MATRICES EN UNA
+
+TRAERSE EL ARRAY EN REVERSA:
+x[::-1]
+
+TRAERSE EL ARRAY de las primeras 2 col y de la fila 2 en adelante
+z[:2,2:]
+
+MULTIPLICA TODOS LOS ELEMENTOS
+x*2
+
+POTENCIA TODOS LOS ELEMENTOS
+x**2
+
+DIVIDIR ARRAY 
+x = np.random.randint(0,100,100)
+x
+a,b,c = np.split(x,[5,18])
+
+EJ:
+ x = np.random.randint(0,100,100)
+>>> x
+array([24, 14, 23, 70, 45, 65, 10, 39, 31, 74,  2, 90, 41,  9,  1, 91, 19,
+       57, 89, 82, 24, 82, 16, 72, 80, 61, 78, 33, 17, 43, 63,  2, 85, 28,
+       48, 46,  4, 13, 91, 83, 80, 93, 93, 17, 79, 29, 83, 13, 23,  5, 33,
+       23, 68, 12, 75, 56, 52, 57, 19, 47, 85, 80, 88, 36,  2, 56, 35, 81,
+       77, 90,  0, 93, 49, 13, 12, 14, 85, 78, 60, 62, 93, 37, 71, 18, 57,
+       77, 95, 14, 13, 53, 77, 26, 47, 49, 51, 52, 50, 56, 57, 17],
+      dtype=int32)
+>>>
+>>> a,b,c = np.split(x,[5,18])
+>>> a
+array([24, 14, 23, 70, 45], dtype=int32)
+>>> b
+array([65, 10, 39, 31, 74,  2, 90, 41,  9,  1, 91, 19, 57], dtype=int32)
+>>> c
+array([89, 82, 24, 82, 16, 72, 80, 61, 78, 33, 17, 43, 63,  2, 85, 28, 48,
+       46,  4, 13, 91, 83, 80, 93, 93, 17, 79, 29, 83, 13, 23,  5, 33, 23,
+       68, 12, 75, 56, 52, 57, 19, 47, 85, 80, 88, 36,  2, 56, 35, 81, 77,
+       90,  0, 93, 49, 13, 12, 14, 85, 78, 60, 62, 93, 37, 71, 18, 57, 77,
+       95, 14, 13, 53, 77, 26, 47, 49, 51, 52, 50, 56, 57, 17],
+      dtype=int32)
+
+
+
+REPASAR EL CAPITULO DEL LIBRO QUE HABLA DE NUMPY
+
+
+
+PANDAS:
+
+=======================================================================
+LOS INDICES SON INMUTABLES Y ORDENADOS; SE GUARDAN EN ORDEN EN MEMORIA.
+=======================================================================
+
+npm install pandas
+
+import pandas as pd
+
+x = pd.Series([128,12,42,15,21])
+x
+
+PONER EL NUMERO DE INDICE QUE QUIERAS
+x = pd.Series([128,12,42,15,21],index=[1,'b',3,'d',5])
+x
+
+CONSULTAR VALORES E INDICES
+>>> x.values
+array([128,  12,  42,  15,  21])
+>>> x.index
+Index([1, 'b', 3, 'd', 5], dtype='object')
+
+INTANCIAR DATOS EN UNA SERIE CON UN DICCIONARIO
+
+>>> mydict = {'Arg':50000000000,'Ita':400000000000,'Esp':3000000000,'Uru':2000000000} 
+>>> p = pd.Series(mydict)
+>>> p
+Arg     50000000000
+Ita    400000000000
+Esp      3000000000
+Uru      2000000000
+dtype: int64
+
+BUSCAR VALORES DE LOS INDICES DENTRO DE LOS RANGOS INGRESADOS
+p['Arg':'Esp']
+
+
+
+HACER UN DATAFRAME
+population = {'Arg':50000000000,'Ita':400000000000,'Esp':3000000000,'Uru':2000000000} 
+area = {'Arg':12343000000,'Ita':12443530000000000,'Esp':356990000,'Uru':20394320000} 
+
+SE LE PASAN NOMBRES Y DATOS
+f = pd.DataFrame({'population':population,'area':area})
+
+
+>>> f
+       population               area
+Arg   50000000000        12343000000
+Ita  400000000000  12443530000000000
+Esp    3000000000          356990000
+Uru    2000000000        20394320000
+
+ACCEDER A LOS DATOS POR SEPARADO
+>>> f['population']['Arg'] 
+np.int64(50000000000)
+>>> f['area']['Arg'] 
+np.int64(12343000000)
+
+VER VALUES E INDICES
+>>> f.values
+array([[      50000000000,       12343000000],
+       [     400000000000, 12443530000000000],
+       [       3000000000,         356990000],
+       [       2000000000,       20394320000]])
+>>> f.index
+Index(['Arg', 'Ita', 'Esp', 'Uru'], dtype='object')
+
+
+BUSCAR DATOS DE LAS MATRICES
+>>> f.values.shape
+(4, 2)
+
+>>> f.values.ndim 
+2
+
+=================================================================
+>>> import numpy as np
+>>> 
+>>> np.random.rand(3,2)
+array([[0.94551291, 0.7735465 ],
+       [0.13725674, 0.4070412 ],
+       [0.6639215 , 0.7596782 ]])
+
+>>> f = pd.DataFrame(np.G.rand(3,2),columns=['col1','col2'],index=[0,1,2]) 
+>>> f
+       col1      col2
+0  0.393831  0.718029
+1  0.876977  0.279337
+2  0.028445  0.882346
+
+>>> g = f*12
+>>> g
+        col1       col2
+0   4.725969   8.616344
+1  10.523730   3.352039
+2   0.341339  10.588155
+>>> g=f+1
+>>> g
+       col1      col2
+0  1.393831  1.718029
+1  1.876977  1.279337
+2  1.028445  1.882346
+
+>>> f+g
+       col1      col2
+0  1.787662  2.436057
+1  2.753955  1.558673
+2  1.056890  2.764693
+
+
+SUMAR VALORES, IGNORA LOS VALORES NULOS COMO None
+
+>>> f.sum()
+col1    1.299253
+col2    1.879712
+dtype: float64
+>>> g.sum()
+col1    4.299253
+col2    4.879712
+dtype: float64
+
+ELIMINAR VALORES NULOS PARA QUE NO OCUPEN LUGAR 
+x.dropna()
+
+
+
+Clase 11: ------------------------------------------------------------------------------------
+
+
+
+Matrices:
+
+Se dividen en:
+- Feature Matrix(X) #Datos de entrada características de un dato en particular (UNTAGGED)
+	.n_features -> #Núm de columnas.
+	.n_samples Flecha para abajo #Núm filas.
+
+- Target Vector(y) #Datos de salida (TAGGED)
+	.n_samples Flecha para abajo #Cantidad de filas.
+
+TIENEN QUE HABER LOS MISMOS DATOS DE ENTRADA COMO DE SALIDA.
+
+LOS DATOS ETIQUETADOS TE LOS DÁ EL MODELO UNA VEZ ENTRENADOR.
+
+|M||M||M| |V|
+|M||M||M| |V|
+|M||M||M| |V|
+|M||M||M| |V|
+|M||M||M| |V|
+
+M = Matriz;
+V = Vector;
+
+Datos de entrada = 5 filas x 3 columnas;
+datos de salida = 5 filas x 4 columnas; #La columna extra vendría a ser por la del Vector.
+
+
+VAMOS A UTILIZAR iris, modelo de datos incluido en sklearn
+
+from sklearn.datasets import load_iris;
+
+iris = load_iris();
+x = iris.data;
+y = iris.target;
+
+
+print(x);
+print(y);
+
+
+print(x.shape);
+print(y.shape);
+
+(150, 4)
+(150,)
+
+
+#Clase de modelo,el dato que no se encuentre etiquetado lo busca en los más parecidos
+
+from sklearn.neighbors import KNeighborsClassifier; 
+
+SEGÚN NOS RECOMIENDA EL PROFESOR, CENTRARSE EN MÁXIMO 3 MODELOS
+SINÓ ESTUDIAR UN MASTER EN PYTHON AVANZADO
+
+
+from sklearn.datasets import load_iris;
+from sklearn.neighbors import KNeighborsClassifier; #Clase de modelo,el dato que no se encuentre etiquetado lo busca en los más parecidos
+import numpy as np;
+
+iris = load_iris();
+x = iris.data; #UNTAGGED
+y = iris.target; #TAGGED
+
+
+# print(x.shape);
+# print(y.shape);
+# print(iris);
+
+model = KNeighborsClassifier(n_neighbors=1);
+
+model.fit(x,y); #LE paso los datos por separado, Matriz y Vector
+
+print(model.predict(np.array([5.8,3.,1.5,9.6]).reshape(1,4)));
+
+RESULT:
+[2]
+
+
+random_state #Semilla, define la secuencia enviada, al cambiarla genera otros datos.
+train_size=0.5 #Especifica en cuanto tiene que dividirse.
+stratify #Orden de como buscar los ejemplares.
+
+UTILIZAR CROSS VALIDATION, PARA QUE ENTRENE CON TODOS LOS DATOS Y NO CON LA MITAD:
+
+from sklearn.datasets import load_iris;
+from sklearn.neighbors import KNeighborsClassifier; #Clase de modelo,el dato que no se encuentre etiquetado lo busca en los más parecidos
+from sklearn.metrics import accuracy_score; #Score, que tan bien le fué en el entrenamiento 1 = Bueno, 0 = Malísimo
+from sklearn.model_selection import train_test_split,cross_val_score,LeaveOneOut; #Entorno de prueba, para dividir datos de entrenamiento y de validaciones para entrenar al modelo.
+import numpy as np;
+
+iris = load_iris();
+x = iris.data; #UNTAGGED
+y = iris.target; #TAGGED
+
+#x1,x2,y1,y2 = train_test_split(x,y,random_state=0,train_size=0.5); #SALTEAR
+
+# print(x.shape);
+# print(y.shape);
+# print(iris);
+
+model = KNeighborsClassifier(n_neighbors=1); #Para que traiga un dato solo.
+
+#model.fit(x1,y1); #Le paso los datos por separado, Matriz y Vector #SALTEAR
+
+# y_predict = model.predict(x2); #SALTEAR
+# print(accuracy_score(y2,y_predict)); #SALTEAR
+loo = LeaveOneOut();
+loo.get_n_splits(x);
+print(cross_val_score(model,x,y,cv=loo)); #Con LeaveOneOut, ejecuta todos menos 1.
+
+av = np.average(cross_val_score(model,x,y,cv=loo));
+print(av); # Trae el promedio;
+
+
+
+------------------------------------------------
+PSEODOVALANCIA
+
+Se dice que cuanto más se aumente el número de vecinos (n_neighbors=?), tendremos mejor resultado, el cual es erroneo.
+
+Alto Sesgo, Baja varianza
+Alto Sesgo, Alta varianza
+Bajo Sesgo, Alta varianza
+Bajo Sesgo, Baja varianza # Es el ideal y así mismo el más complicado de llegar.
+
+
+|-----------------|
+|-|-------------|-|
+|--|-----------|--|
+|---|---------|---|
+|----|-------|----|
+|-----\-----/-----|
+|------|---|------|
+
+
+Clase 12: ------------------------------------------------------------------------------------
+titanic.py
+
+
+Hiperparámetro, es la máxima profundidad del arbol.
+
+UTILIZANDO EL ARCHIVO train.csv con los datos de titanic, realizamos dicho modelo:
+
+import pandas as pd;
+import numpy as np;
+
+titanic_df = pd.read_csv('train.csv');
+# print(titanic_df.head(3));#Te imprime las primeras 3 filas.
+# print(titanic_df.info());#Te trae los que no son Nulos.
+
+#Lenar los valores nulos
+titanic_df['age'].fillna(titanic_df['age'].mean(),inplace=True); #Los llena en base al promedio de las edades.
+titanic_df['cabin'].fillna('N',inplace=True); #Los llena en base al promedio de las edades.
+titanic_df['embarked'].fillna('N',inplace=True); #Los llena en base al promedio de las edades.
+# inplace=True, Todas las vistas van a tener el mismo valor nuevo.
+
+print(titanic_df.info());#Te trae los que no son Nulos.
+
+print('Null values = ', titanic_df.isnull().sum().sum());#Te trae todos los valores nulos sumados, suma las filas y las columnas.
+
+
+
+====================================================
+		  RESULTADO FINAL:
+====================================================
+import pandas as pd;
+import numpy as np;
+from sklearn import preprocessing;
+from sklearn.model_selection import train_test_split,cross_val_score,LeaveOneOut,GridSearchCV;
+from sklearn.tree import DecisionTreeClassifier,plot_tree;
+from sklearn.metrics import accuracy_score;# Mide si el modelo entrena bien
+from matplotlib import pyplot as plt; #Para que te aparezca el arbol. 
+
+def encode_features(df, features = ['embarked','cabin','sex']): #Parametrizamos las features.
+    # features = ['embarked','cabin','sex'];
+    for feature in features:
+        le= preprocessing.LabelEncoder();#Genera un etiquetor - le(label encoder);
+        le=le.fit(df[feature]);#Entrena cada columna.
+        df[feature]=le.transform(df[feature]);#Reemplaza a columna de texto por numerica.
+        
+    return df;
+        
+def fillNulls(df):
+    #Lenar los valores nulos
+    df['age'].fillna({'age':df['age'].mean()},inplace=True); #Los llena en base al promedio de las edades.
+    df['cabin'].fillna({'cabin':'N'},inplace=True); #Los llena en base al promedio de las edades.
+    df['embarked'].fillna({'embarked':'N'},inplace=True); #Los llena en base al promedio de las edades.
+    # inplace=True, Todas las vistas van a tener el mismo valor nuevo.
+    return df;
+def drop_features(df,features=['name','ticket']):
+    df.drop(features,axis=1,inplace=True);#Axis = 1, elimina la columna entera.
+    return df;
+
+def format_features(df):
+    df['cabin']=df['cabin'].str[0:1];#Se trae desde el primer elemento, quedandose con una posición.
+    # print('Cabin dist', df['cabin'].value_counts()); #Retorna una serie de valores.
+    df = encode_features(df);
+    return df;
+    
+#Toma datos de la librería administrada.
+titanic_df = pd.read_csv('train.csv');
+#LLena los Nulls.
+titanic_df = fillNulls(titanic_df);
+
+#Mejora distribución de cabins.
+titanic_df = format_features(titanic_df);
+
+#Elimina columnas innecesarias.
+titanic_df = drop_features(titanic_df);
+
+# print(titanic_df.head());
+
+y_titanic_df = titanic_df['survived'];
+x_titanic_df = titanic_df.drop('survived',axis=1);
+
+#test_size=0.2 20% de los datos para entrenar y el 80% para probar.
+#random_state=11 Semilla, buena semilla es núm par o primo.
+X_train,X_test,y_train,y_test = train_test_split(x_titanic_df,y_titanic_df,test_size=0.2,random_state=11)#Mayúscula es lo generado, minúscula es lo real.
+
+model = DecisionTreeClassifier(random_state=11);#Se le pasa el orden en el que quiero minar los datos.
+
+#Parametros para tener un mejor resultado
+parameters = {'max_depth':[2,3,5,10],'min_samples_split':[2,3,5],'min_samples_leaf':[1,5,8]};
+
+gridModel = GridSearchCV(model,param_grid=parameters,scoring='accuracy',cv=5); #Cv = 5, hace validación cruzada 5 veces.
+
+gridModel.fit(X_train,y_train);
+
+print('Best parameter combination is: ', gridModel.best_params_);
+print('Best accurancy is: ', gridModel.best_score_);
+
+# Y_predict= model.predict(X_test); # Predice etiquetas de validación
+# print("Accuracy score:", accuracy_score(y_test,Y_predict));
+
+newModel = gridModel.best_estimator_;
+newModel.fit(X_train,y_train);
+
+# plt.figure();
+plot_tree(newModel); # Te devuelve que tipo de semilla usó.
+plt.show();
+# plt.savefig('tree.svg',format='svg',bbox_inches='tight');# Te genera el dato del arbol.
+
+Clase 13: ------------------------------------------------------------------------------------
+
+Modelos de clasificación de datos:
+-K Medias. 
+Rápido etiquetado pero entrenamiento lento dependiendo del volumen de datos.
+LAS FRONTERAS ENTRE LOS CLUSTERS TIENEN QUE SER LINEALES.
+-Naive Bayes.
+Se puede trabajar con datos no númericos, ya que hace un cálculo probabilistico que es más preciso.
+SU PROBLEMA ES QUE EL MODELO ASUME QUE CADA FEATURE ES INDEPENDIENTE ENTRE SI, 
+POR ENDE SI TENËS MUCHOS DATOS NO VA A SER MUY BUENO.
+
+Hay que transformar los datos en números para poder clasificarlos.
+
+K MEDIAS, busca el promedio y lleva los números a la columna con el parecido del promedio.
+25 77 55
+38 89 12
+47 91 8
+51 52 9
+10 5 63
+
+El promedio de cada columna es:
+
+Columna 1: 34.2
+Columna 2: 62.8
+Columna 3: 29.4 ​
+=====================================================
+import numpy as np
+
+# Matriz de datos
+data = np.array([
+    [25, 77, 55],
+    [38, 89, 12],
+    [47, 91, 8],
+    [51, 52, 9],
+    [10, 5, 63]
+])
+
+# Calcular el promedio de cada columna
+column_averages = np.mean(data, axis=0)
+column_averages
+Resultado
+array([34.2, 62.8, 29.4])
+=====================================================
+
+38 51 1
+47 52 8
+   55 9
+   63 10
+   77 12
+   89 25
+   91
+
+El promedio de cada columna, ignorando los valores faltantes, es:
+
+Columna 1: 42.5
+Columna 2: 68.29
+Columna 3: 10.83
+
+EN BASE A ESTO EL TOTAL DE VUELTAS DA EL TOTAL DE K MEDIAS POR ETIQUETAR
+
+
+
+
+===========================================
+UTILIZAR IRIS DATASET
+
+
+from sklearn.datasets import load_iris
+iris = load_iris()
+
+===========================================
+
+----------------------------------------------------------------------
+Naive Bayes
+----------------------------------------------------------------------
+
+Declara los valores en base a sus features.
+MEDIANTE CALCULOS PROBABILISTICOS
+
+
